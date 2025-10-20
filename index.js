@@ -28,7 +28,7 @@ const showHelp = () => {
 switch (prikaz) {
   case "write":
     if (!text) {
-      console.log(chalk.red("Chybí text! Použití: node script.js write 'tvůj text'"));
+      console.log(chalk.red("Chybí text!"));
     } else {
       console.log(chalk.blue("Zapisuji do souboru..."));
       fs.writeFileSync("soubor.txt", text);
@@ -37,111 +37,79 @@ switch (prikaz) {
     break;
 
   case "read":
-    try {
-      const obsah = fs.readFileSync("soubor.txt", "utf8");
-      console.log(chalk.blue("Obsah souboru:"));
-      console.log(obsah);
-    } catch (err) {
-      console.log(chalk.red("Soubor neexistuje!"));
-    }
+    const obsah = fs.readFileSync("soubor.txt", "utf8");
+    console.log(chalk.blue("Obsah souboru:"));
+    console.log(obsah);
     break;
 
   case "append":
     if (!text) {
-      console.log(chalk.red("Chybí text! Použití: node script.js append 'tvůj text'"));
+      console.log(chalk.red("Chybí text!"));
     } else {
-      try {
-        let existingContent;
-if (fs.existsSync("soubor.txt")) {
-    existingContent = fs.readFileSync("soubor.txt", "utf8");
-} else {
-    existingContent = "";
-}
-        fs.writeFileSync("soubor.txt", existingContent + "\n" + text);
-        console.log(chalk.green("Text přidán do souboru!"));
-      } catch (err) {
-        console.log(chalk.red("Chyba při přidávání textu!"));
+      let existingContent;
+      if (fs.existsSync("soubor.txt")) {
+        existingContent = fs.readFileSync("soubor.txt", "utf8");
+      } else {
+        existingContent = "";
       }
+      fs.writeFileSync("soubor.txt", existingContent + "\n" + text);
+      console.log(chalk.green("Text přidán do souboru!"));
     }
     break;
 
   case "delete":
-    try {
-      if (fs.existsSync("soubor.txt")) {
-        fs.unlinkSync("soubor.txt");
-        console.log(chalk.green("Soubor byl smazán!"));
-      } else {
-        console.log(chalk.yellow("Soubor neexistuje!"));
-      }
-    } catch (err) {
-      console.log(chalk.red("Chyba při mazání souboru!"));
+    if (fs.existsSync("soubor.txt")) {
+      fs.unlinkSync("soubor.txt");
+      console.log(chalk.green("Soubor byl smazán!"));
+    } else {
+      console.log(chalk.yellow("Soubor neexistuje!"));
     }
     break;
 
   case "info":
-    try {
-      if (fs.existsSync("soubor.txt")) {
-        const stats = fs.statSync("soubor.txt");
-        console.log(chalk.blue("Informace o souboru:"));
-        console.log(`Velikost: ${stats.size} bajtů`);
-        console.log(`Vytvořeno: ${stats.birthtime}`);
-        console.log(`Poslední úprava: ${stats.mtime}`);
-      } else {
-        console.log(chalk.yellow("Soubor neexistuje!"));
-      }
-    } catch (err) {
-      console.log(chalk.red("Chyba při získávání informací!"));
+    if (fs.existsSync("soubor.txt")) {
+      const stats = fs.statSync("soubor.txt");
+      console.log(chalk.blue("Informace o souboru:"));
+      console.log(`Velikost: ${stats.size} bajtů`);
+      console.log(`Vytvořeno: ${stats.birthtime}`);
+      console.log(`Poslední úprava: ${stats.mtime}`);
+    } else {
+      console.log(chalk.yellow("Soubor neexistuje!"));
     }
     break;
 
   case "count":
-    try {
-      if (fs.existsSync("soubor.txt")) {
-        const obsah = fs.readFileSync("soubor.txt", "utf8");
-        console.log(chalk.blue(`Počet znaků v souboru: ${obsah.length}`));
-      } else {
-        console.log(chalk.yellow("Soubor neexistuje!"));
-      }
-    } catch (err) {
-      console.log(chalk.red("Chyba při počítání znaků!"));
+    if (fs.existsSync("soubor.txt")) {
+      const obsah = fs.readFileSync("soubor.txt", "utf8");
+      console.log(chalk.blue(`Počet znaků v souboru: ${obsah.length}`));
+    } else {
+      console.log(chalk.yellow("Soubor neexistuje!"));
     }
     break;
 
   case "upper":
-    try {
-      if (fs.existsSync("soubor.txt")) {
-        const obsah = fs.readFileSync("soubor.txt", "utf8");
-        fs.writeFileSync("soubor.txt", obsah.toUpperCase());
-        console.log(chalk.green("Text převeden na velká písmena!"));
-      } else {
-        console.log(chalk.yellow("Soubor neexistuje!"));
-      }
-    } catch (err) {
-      console.log(chalk.red("Chyba při převodu textu!"));
+    if (fs.existsSync("soubor.txt")) {
+      const obsah = fs.readFileSync("soubor.txt", "utf8");
+      fs.writeFileSync("soubor.txt", obsah.toUpperCase());
+      console.log(chalk.green("Text převeden na velká písmena!"));
+    } else {
+      console.log(chalk.yellow("Soubor neexistuje!"));
     }
     break;
 
   case "lower":
-    try {
-      if (fs.existsSync("soubor.txt")) {
-        const obsah = fs.readFileSync("soubor.txt", "utf8");
-        fs.writeFileSync("soubor.txt", obsah.toLowerCase());
-        console.log(chalk.green("Text převeden na malá písmena!"));
-      } else {
-        console.log(chalk.yellow("Soubor neexistuje!"));
-      }
-    } catch (err) {
-      console.log(chalk.red("Chyba při převodu textu!"));
+    if (fs.existsSync("soubor.txt")) {
+      const obsah = fs.readFileSync("soubor.txt", "utf8");
+      fs.writeFileSync("soubor.txt", obsah.toLowerCase());
+      console.log(chalk.green("Text převeden na malá písmena!"));
+    } else {
+      console.log(chalk.yellow("Soubor neexistuje!"));
     }
     break;
 
   case "clear":
-    try {
-      fs.writeFileSync("soubor.txt", "");
-      console.log(chalk.green("Soubor byl vyprázdněn!"));
-    } catch (err) {
-      console.log(chalk.red("Chyba při vyprazdňování souboru!"));
-    }
+    fs.writeFileSync("soubor.txt", "");
+    console.log(chalk.green("Soubor byl vyprázdněn!"));
     break;
 
   case "help":
