@@ -4,7 +4,6 @@ import checkUtils from "./utils.js";
 
 checkUtils();
 
-// Získání argumentů (první 2 jsou node a cesta k souboru)
 const args = process.argv.slice(2);
 const prikaz = args[0];
 const text = args[1];
