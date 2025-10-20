@@ -51,9 +51,12 @@ switch (prikaz) {
       console.log(chalk.red("Chybí text! Použití: node script.js append 'tvůj text'"));
     } else {
       try {
-        const existingContent = fs.existsSync("soubor.txt") 
-          ? fs.readFileSync("soubor.txt", "utf8") 
-          : "";
+        let existingContent;
+if (fs.existsSync("soubor.txt")) {
+    existingContent = fs.readFileSync("soubor.txt", "utf8");
+} else {
+    existingContent = "";
+}
         fs.writeFileSync("soubor.txt", existingContent + "\n" + text);
         console.log(chalk.green("Text přidán do souboru!"));
       } catch (err) {
