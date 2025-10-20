@@ -1,5 +1,5 @@
-const check = function(){
-    console.log("Jenom něco dělám");
-}
+const check = function () {
+  //console.log("Jenom něco dělám");
+};
 
 module.exports = check;
